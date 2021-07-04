@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/useUser";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import { DEFAULT_IMAGE_PATH } from "../../constants/paths";
+import { useUserContext } from "../../context/user";
 
 function Header({
   photosCount,
@@ -18,9 +19,10 @@ function Header({
     username: profileUsername,
   },
 }) {
-  const { user } = useUser();
+  const { user: loggedInUser } = useUserContext();
+  const { user } = useUser(loggedInUser?.userId);
   const [isFollingProfile, setIsFollingProfile] = useState(null);
-  const activeBtnFollow = user.username && user.username !== profileUsername;
+  const activeBtnFollow = user?.username && user?.username !== profileUsername;
   const handleToggleFollow = async () => {
     setIsFollingProfile((isFollingProfile) => !isFollingProfile);
     setFollowerCount({
@@ -42,14 +44,14 @@ function Header({
       );
       setIsFollingProfile(!!isFollowing);
     };
-    if (user.username && profileUserId) {
+    if (user?.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+  }, [user?.username, profileUserId]);
 
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-      <div className="container flex justify-center">
+      <div className="container flex justify-center items-center">
         {profileUsername ? (
           <img
             src={`/images/avatars/${profileUsername}.jpg`}

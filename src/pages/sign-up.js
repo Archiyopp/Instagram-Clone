@@ -33,14 +33,18 @@ function SignUp() {
         });
 
         // firebase user collection (create a document)
-        await firebase.firestore().collection("users").add({
-          userId: createdUserResult.user.uid,
-          username: username.toLowerCase(),
-          fullName: fullname,
-          emailAddress: email.toLowerCase(),
-          following: [],
-          dateCreated: Date.now(),
-        });
+        await firebase
+          .firestore()
+          .collection("users")
+          .add({
+            userId: createdUserResult.user.uid,
+            username: username.toLowerCase(),
+            fullName: fullname,
+            emailAddress: email.toLowerCase(),
+            following: ["2", "YIUsuqwU9XckO9EKyHAhAC43qjh2"],
+            followers: [],
+            dateCreated: Date.now(),
+          });
 
         history.push(ROUTES.DASHBOARD);
       } catch (error) {
@@ -50,6 +54,7 @@ function SignUp() {
         setError(error.message);
       }
     } else {
+      setUsername("");
       setError("That username is already taken, please try another");
     }
     // try {

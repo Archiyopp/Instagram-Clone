@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 
@@ -7,7 +8,7 @@ function ProtectedRoute({ user, children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) => {
-        if (user) return children;
+        if (user) return React.cloneElement(children, { user });
         if (!user) {
           return (
             <Redirect
