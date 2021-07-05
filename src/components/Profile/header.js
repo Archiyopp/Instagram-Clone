@@ -20,7 +20,7 @@ function Header({
   },
 }) {
   const { user: loggedInUser } = useUserContext();
-  const { user } = useUser(loggedInUser?.userId);
+  const { user } = useUser(loggedInUser?.uid);
   const [isFollingProfile, setIsFollingProfile] = useState(null);
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
   const handleToggleFollow = async () => {
@@ -71,18 +71,20 @@ function Header({
           {activeBtnFollow && isFollingProfile === null ? (
             <Skeleton count={1} height={32} width={80} />
           ) : (
-            <button
-              className="bg-blue-medium text-sm font-bold rounded text-white w-20 h-8"
-              type="button"
-              onClick={handleToggleFollow}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleToggleFollow();
-                }
-              }}
-            >
-              {isFollingProfile ? "Unfollow" : "Follow"}
-            </button>
+            activeBtnFollow && (
+              <button
+                className="bg-blue-medium text-sm font-bold rounded text-white w-20 h-8"
+                type="button"
+                onClick={handleToggleFollow}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleToggleFollow();
+                  }
+                }}
+              >
+                {isFollingProfile ? "Unfollow" : "Follow"}
+              </button>
+            )
           )}
         </div>
         <div className="container flex mt-4">

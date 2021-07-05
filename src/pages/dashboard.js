@@ -7,7 +7,7 @@ import { LoggedInUserContext } from "../context/loggedInUser";
 import PropTypes from "prop-types";
 
 export default function Dashboard({ user: loggedInUser }) {
-  const { user, setActiveUser } = useUser(loggedInUser.uid);
+  const { user, setActiveUser } = useUser(loggedInUser?.uid);
   useEffect(() => {
     document.title = "Instasnap";
   }, []);
