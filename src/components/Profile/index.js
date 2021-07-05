@@ -8,7 +8,7 @@ function UserProfile({ user }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {
     profile: {},
-    photosCollection: [],
+    photosCollection: null,
     followerCount: 0,
   };
   const [{ profile, photosCollection, followerCount }, dispatch] = useReducer(

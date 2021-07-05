@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import {
   handleSuggestedProfileFollowers,
   handleLoggedInUserFollowing,
+  getUserByUserId,
 } from "../../services/firebase";
 import { DEFAULT_IMAGE_PATH } from "../../constants/paths";
+import { useLoggedInUserContext } from "../../context/loggedInUser";
 export default function SuggestedProfile({
   username,
   profileDocId,
@@ -13,16 +15,19 @@ export default function SuggestedProfile({
   userId,
   userDocId,
 }) {
+  const [followed, setFollowed] = useState(false);
+  const { setActiveUser } = useLoggedInUserContext();
   async function followUser() {
     setFollowed(true);
     await handleLoggedInUserFollowing(profileId, userDocId, followed);
     await handleSuggestedProfileFollowers(userId, profileDocId, followed);
+    const [user] = getUserByUserId(userId);
+    setActiveUser(user);
 
     // update the following array of my logged in user
     //and the followers of the user who has been followed
   }
 
-  const [followed, setFollowed] = useState(false);
   return !followed ? (
     <div className="flex flex-row items-center align-center justify-between">
       <div className="flex items-center justify-between">

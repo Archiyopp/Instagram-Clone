@@ -68,7 +68,9 @@ function Header({
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{profileUsername}</p>
-          {activeBtnFollow && (
+          {activeBtnFollow && isFollingProfile === null ? (
+            <Skeleton count={1} height={32} width={80} />
+          ) : (
             <button
               className="bg-blue-medium text-sm font-bold rounded text-white w-20 h-8"
               type="button"
